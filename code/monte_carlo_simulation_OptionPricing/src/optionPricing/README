@@ -1,0 +1,106 @@
+ # The Monte Carlo Simulation project has 3 interfaces and 10 classes:
+ 
+ INTERFACES:
+ 1. IPayOut
+ 2. IRandomVectorGenerator
+ 3. IStockPath
+
+ CLASSES:
+ 1.AntitheticRandomVectorGeneratoImpl
+ 2.AsianCallOptionPayOutImpl
+ 3.CallOptionPayOutImpl
+ 4.MCRunMe
+ 5.MonteCarloSimulation
+ 6.Option
+ 7.PricePoint
+ 8.RandomVectorGeneratorImpl
+ 9.StatsCollector
+ 10.StockPathImpl
+
+ # It takes about 6 minutes and 20 seconds(e.g.375281 Milli-seconds) and 1 minute and 20 seconds (e.g.,75496 Milli-seconds)
+   to run the Call Option and Asian Call Option pricing PayOut type, respectively.
+   
+ #	Mockito was used for testing(JUnit: OptionPricing_Test package)
+ 
+ # Referenced Libraries needed:
+ 	1)commons-math3-3.6.1.jar
+ 	2)mockito-all-1.9.5.jar
+ 	3)joda-time-2.1.jar
+ 
+ #  To run the project you have to run MCRunMe class:
+ 
+ 1. The user has two choices: (a) simulate.callOptionPricing() and (b) simulate.asianCallOptionPricing();
+     /*Uncomment "simulate.callOptionPricing(); or comment simulate.asianCallOptionPricing();" 
+		depending on which type of payOut that you need to perform*/
+ 
+ #  In order to run the Monte Carlo simulation with different "Inputs parameters" you need the following:
+ 
+ 1. MonteCarloSimulation class has several global and local variables that can be changed by the user:
+    
+    PROBLEM(1):
+   
+    %Global variables:
+    private String optionName = "IBM";
+	private double probability = 0.96;
+	private double error = 0.01;
+	private int numberOfDays = 252;
+	private double initialPrice = 152.35;
+	private double interestRate = 0.0001;
+	private double volatility = 0.01;
+	private DateTime initialTime = new DateTime(2017, 10, 26, 10, 00);
+	%Local variables(under CallOptionPricing() METHOD)
+	this.strikePrice = 165;//($)
+	
+	PROBLEM(2):
+ 	%Global variables: 
+ 	SAME AS ABOVE(problem(1))
+ 	%Local variables(under asianCallOptionPricing() METHOD):
+ 	this.strikePrice = 164;//($)
+ 	
+  2. MonteCarloSimulation class has two methods:
+     (a)CallOptionPricing() for pricing a Call Option
+     (b)asianCallOptionPricing() for pricing an Asian Call Option
+     (c)MCSimulate() with a for loop to run the simulation N number of times.
+     
+ 	NOTE:
+ 	The user can estimate a value to start with in each above methods 
+ 	in order to find N to start with(e.g., for estValues.add(5.5)); 
+ 	I have used 10 Million looping-steps for both problems. 
+ 	It can be changed in the for loop that can be found in the 
+ 	MCSimulate() METHOD of the MonteCarloSimulation class.
+ 	 
+3. "Running MC Simulation..." message is displayed on console when the program is still running.
+
+4. Typical output display of the console when the simulation is done (It takes about 6 minutes and
+   20 seconds(e.g.375281 Milli-seconds) and 1 minute and 20 seconds (e.g.,75496 Milli-seconds)
+   to run the Call Option and AsianCall Option pricing PayOut type, respectively):
+
+	%PROBLEM(1) Call Option-OUTPUT-EXAMPLE:
+	
+	Running MC Simulation...
+	----------------------------------MC simulation DONE!-------------------------------------
+	It requires 7144541 number of simulations to converge below the threshold error of $0.01
+	------------------------------------------------------------------------------------------
+	++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	PayOut Type : CallOption
+	The value of IBM option is :$6.371237966620625
+	The IBM option should be priced at :$6.212688878698534
+	++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	
+	Runtime : 375281 Milli-seconds
+
+	%PROBLEM(2)	Asian Call Option -OUTPUT-EXAMPLE: 
+	
+	Running MC Simulation...
+	----------------------------------MC simulation DONE!-------------------------------------
+	It requires 1360504 number of simulations to converge below the threshold error of $0.01
+	------------------------------------------------------------------------------------------
+	++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	PayOut Type : AsianCallOption
+	The value of IBM option is :$2.247202480735159
+	The IBM option should be priced at :$2.191280553856355
+	++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	
+	Runtime : 75496 Milli-seconds
+	
+	
